@@ -1,24 +1,19 @@
-import react, { Component } from 'react';
-import NavBar from './components/navbar';
-import Card from './components/card';
+import React, { Component } from 'react';
+import LibreriaImmagine from './images/libreria_immagine.jpg';
+import LoginForm from './components/loginForm';
+import './App.css'; // Importa il file CSS per lo stile
 
 class App extends Component {
-  render(){
+  render() {
     return (
-    <>
-      <NavBar />
-      <div className='container'>
-        <h1>Titolo random</h1>
-        <hr/>
-        <div className='row'>
-          <Card />
-        </div>
-      </div>
-    </>
-
-  );
-  }
-  
+          <div className='main-box'>
+            <div className='left-section'>
+              <img src={LibreriaImmagine} alt="Descrizione dell'immagine" />
+            </div>
+            <LoginForm/>            
+          </div>
+    );
+  }  
 }
 
 export default App;
