@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+import { Link } from 'react-router-dom';
 
 class InputField extends Component {
     render() {
@@ -19,8 +19,6 @@ class InputField extends Component {
                         className="form-text text-muted">
                     </small>
                 </div>
-                
-
 
                 <div className="form-group">
                     <label htmlFor="confermaEmail">Conferma Email</label>
@@ -36,8 +34,6 @@ class InputField extends Component {
                         className="form-text text-muted">
                     </small>
                 </div>
-
-
 
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Password</label>
@@ -59,13 +55,17 @@ class InputField extends Component {
                     />
                 </div>
 
-
-
-
-                <button type="submit" className="btn btn-primary">Conferma</button>
+                <div className="form-group buttons-container">
+                    
+                    <button type="button" className='btn btn-secondary'>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Annulla</Link>
+                    </button>
+                    <button type="submit" className="btn btn-primary">Conferma</button>
+                </div>
             </form>
         );
     }
 }
 
 export default InputField;
+
