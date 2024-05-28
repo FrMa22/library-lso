@@ -1,0 +1,59 @@
+
+.search-popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    border: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-popup {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.search-input {
+    margin: 5px;
+    width: calc(100% - 10px); /* Larghezza della casella di testo */
+}
+
+.category-list {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: 40%;
+    overflow-y: auto; /* Abilita lo scorrimento verticale */
+}
+
+.category-item {
+    margin: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+}
+.category-list::-webkit-scrollbar {
+    width: 8px; /* Larghezza della barra laterale */
+  }
+  
+.category-list::-webkit-scrollbar-track {
+background: #f4f4f4; /* Colore dello sfondo della barra laterale */
+}
+
+.category-list::-webkit-scrollbar-thumb {
+background-color: #3a3a3a; /* Colore della barra laterale */
+border-radius: 5px; /* Bordo arrotondato */
+}
+/* Aggiungi stile ai bottoni */
+.close-button {
+    background-color:#c19de882; /* Definisci il colore e lo spessore del bordo */
+    border-radius: 30px;
+    /* Altri stili per i bottoni... */
+}
