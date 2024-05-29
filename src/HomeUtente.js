@@ -67,7 +67,7 @@ class HomeUtente extends Component {
                     {loading ? (
                         <p>Caricamento...</p>
                     ) : (
-                        <div className='row' style={{ alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div className='row' style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'left', marginLeft:'5rem' }}>
                             {auctions.map(auction => (
                                 <Card
                                     key={auction.id}
