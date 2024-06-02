@@ -1,90 +1,97 @@
+// HomeUtente.js
 import React, { Component } from 'react';
-import './HomeUtente.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import Card from './components/card';
+import HomeUtenteBase from './components/homeUtenteBase';
+import Carrello from './components/carrello';
+import NavBar from './components/navBar';
 import SearchPopup from './components/searchPopup';
+import SchermataRicerca from './components/schermataRicerca';
+import LibriInPrestito from './components/libriInPrestito';
 
 class HomeUtente extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            auctions: [],
-            loading: true,
-            isSearchPopupOpen: false
+            currentScreen: 1, // 1: HomeUtenteBase, 2: Carrello, 3: SchermataRicerca
+            isSearchPopupOpen: false,
+            searchParams: { keyword: '', category: [] },
+            searchKey: 0 // Aggiungi una chiave per forzare il remounting
         };
     }
 
-    componentDidMount() {
-        // Esegui una richiesta al backend per ottenere i dati delle aste
-        fetch('http://localhost:8080/auctions')
-            .then(response => response.json())
-            .then(data => {
-                // Aggiorna lo stato con i dati ottenuti dal backend
-                this.setState({ auctions: data.auctions, loading: false });
-            })
-            .catch(error => {
-                console.error('Errore durante il recupero delle aste:', error);
-                this.setState({ loading: false });
-            });
-    }
+    // Funzione per cambiare la schermata
+    changeScreen = (screenNumber) => {
+        this.setState({ currentScreen: screenNumber });
+    };
 
+    // Funzione per gestire l'apertura/chiusura del popup di ricerca
     toggleSearchPopup = () => {
         this.setState(prevState => ({
             isSearchPopupOpen: !prevState.isSearchPopupOpen
         }));
     };
 
+    // Funzione per gestire la ricerca
     handleSearch = (keyword, category) => {
-        // Qui puoi implementare la logica di ricerca
-        // Utilizza keyword per la parola chiave di ricerca
-        // Utilizza category per la categoria selezionata
-        // Esegui la ricerca e aggiorna lo stato con i risultati
         console.log('Ricerca:', keyword, category);
+        // Imposta la schermata corrente su SchermataRicerca e passa i parametri
+        this.setState(prevState => ({
+            currentScreen: 3,
+            searchParams: { keyword, category },
+            searchKey: prevState.searchKey + 1 // Incrementa la chiave per forzare il remounting
+        }));
+    };
+
+    // Funzione per gestire il logout
+    handleLogout = () => {
+        localStorage.removeItem('userEmail');
+        // Logica per il logout, ad esempio, reindirizzamento alla pagina di login
+        window.location.href = '/'; // Modifica questo percorso secondo le tue necessità
     };
 
     render() {
-        const { auctions, loading, isSearchPopupOpen } = this.state;
+        const { currentScreen, isSearchPopupOpen, searchParams, searchKey } = this.state;
+
+        let componentToDisplay;
+        // Determina il componente da visualizzare in base alla schermata corrente
+        switch (currentScreen) {
+            case 1:
+                componentToDisplay = <HomeUtenteBase />;
+                break;
+            case 2:
+                componentToDisplay = <Carrello />;
+                break;
+            case 3:
+                componentToDisplay = <SchermataRicerca key={searchKey} keyword={searchParams.keyword} category={searchParams.category} />;
+                break;
+            case 4:
+                componentToDisplay = <LibriInPrestito/>;
+                break;
+            default:
+                componentToDisplay = <HomeUtenteBase />;
+        }
 
         return (
             <>
-                <header className="home-header">
-                    <div className="left-buttons">
-                        {/* Aggiungi qui eventuali altri bottoni nella parte sinistra */}
-                    </div>
-                    <div className="title">
-                        Libri disponibili
-                    </div>
-                    <div className="right-buttons">
-                        <button className="search-button" onClick={this.toggleSearchPopup}>
-                            <i className="fas fa-search icon-large"></i>
-                        </button>
-                        <button className="menu-button">
-                            <i className="fas fa-ellipsis-v icon-large"></i>
-                        </button>
-                    </div>
-                </header>
-                <main className="home-content">
-                    {loading ? (
-                        <p>Caricamento...</p>
-                    ) : (
-                        <div className='row' style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'left', marginLeft:'5rem' }}>
-                            {auctions.map(auction => (
-                                <Card
-                                    key={auction.id}
-                                    nome_libro={auction.name}
-                                    nome_autore={auction.seller}
-                                    durata_prestito={auction.duration} />
-                            ))}
-                        </div>
-                    )}
-                    {/* Contenuto principale */}
-                </main>
-                {/* Popup di ricerca */}
-                <SearchPopup
-                    isOpen={isSearchPopupOpen}
-                    onClose={this.toggleSearchPopup}
-                    onSearch={this.handleSearch}
+                {/* Navbar */}
+                <NavBar 
+                    toggleSearchPopup={this.toggleSearchPopup} 
+                    changeScreen={this.changeScreen} 
+                    currentScreen={currentScreen}
+                    searchParams={searchParams}
+                    onLogout={this.handleLogout} // Passa la funzione di logout come prop
                 />
+                
+                {/* Visualizzazione del componente corrente */}
+                {componentToDisplay}
+
+                {/* Popup di ricerca */}
+                {isSearchPopupOpen && (
+                    <SearchPopup
+                        isOpen={isSearchPopupOpen}
+                        onClose={this.toggleSearchPopup}
+                        onSearch={this.handleSearch}
+                    />
+                )}
             </>
         );
     }

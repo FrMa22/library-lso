@@ -1,3 +1,12 @@
+.search-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.242); /* Sfondo semi-trasparente */
+    z-index: 999; /* Mettilo sotto il popup */
+}
 
 .search-popup-container {
     position: fixed;
@@ -5,10 +14,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    height: 300px;
+    height: 320px;
     border: 1px solid #000;
     display: flex;
     flex-direction: column;
+    background-color: #ffffff; /* Sfondo bianco solido */
+    z-index: 1000; /* Alto valore per essere sopra altri elementi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra per il popup */
 }
 
 .search-popup {
@@ -39,21 +51,29 @@
     justify-content: space-between;
     margin: 5px;
 }
+
 .category-list::-webkit-scrollbar {
     width: 8px; /* Larghezza della barra laterale */
-  }
-  
+}
+
 .category-list::-webkit-scrollbar-track {
-background: #f4f4f4; /* Colore dello sfondo della barra laterale */
+    background: #f4f4f4; /* Colore dello sfondo della barra laterale */
 }
 
 .category-list::-webkit-scrollbar-thumb {
-background-color: #3a3a3a; /* Colore della barra laterale */
-border-radius: 5px; /* Bordo arrotondato */
+    background-color: #3a3a3a; /* Colore della barra laterale */
+    border-radius: 5px; /* Bordo arrotondato */
 }
-/* Aggiungi stile ai bottoni */
+
 .close-button {
-    background-color:#c19de882; /* Definisci il colore e lo spessore del bordo */
+    background-color: #c19de882; /* Definisci il colore e lo spessore del bordo */
+    border: none; /* Rimuovi il bordo */
     border-radius: 30px;
-    /* Altri stili per i bottoni... */
+    padding: 0.5rem 1rem; /* Aggiungi padding per una migliore usabilità */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+    transition: background-color 0.3s ease; /* Aggiungi transizione per l'effetto hover */
+}
+
+.close-button:hover {
+    background-color: #b8860b; /* Cambia il colore di sfondo al passaggio del mouse */
 }

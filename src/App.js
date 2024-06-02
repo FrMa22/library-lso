@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './components/loginForm';
 import Registrazione from './Registrazione';
 import HomeUtente from './HomeUtente';
@@ -7,7 +7,8 @@ import './App.css';
 
 class App extends Component {
   state = {
-    loggedIn: false // Stato per tracciare il login
+    loggedIn: false, // Stato per tracciare il login
+    role: '' // Stato per tracciare il ruolo dell'utente
   };
 
   handleLogin = async (email, password) => {
@@ -25,10 +26,15 @@ class App extends Component {
       if (response.ok) {
         const data = await response.text();
         console.log('Risposta dal backend:', data);
-        if (data.includes("utente trovato")) {
-          console.log("Login avvenuto con successo");
-          this.setState({ loggedIn: true });
-          window.location.href = '/homeUtente'; // Reindirizza a /home con un cambio di pagina
+        if (data.includes("utente")) {
+          console.log("Login utente avvenuto con successo");
+          localStorage.setItem('userEmail', email); // Salva l'email nel Local Storage
+          this.setState({ loggedIn: true, role: 'utente' });
+          window.location.href = '/homeUtente'; // Reindirizza a /homeUtente
+        } else if (data.includes("libraio")) {
+          console.log("Login libraio avvenuto con successo");
+          localStorage.setItem('userEmail', email); // Salva l'email nel Local Storage
+          this.setState({ loggedIn: true, role: 'libraio' });
         } else {
           console.log("Credenziali non valide");
         }
@@ -39,6 +45,7 @@ class App extends Component {
       console.error('Errore nella richiesta al backend:', error.message);
     }
   };
+
   render() {
     return (
       <Router>
