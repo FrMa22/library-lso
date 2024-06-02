@@ -1,0 +1,57 @@
+/* HomeLibraio.css */
+.container {
+    width: 80%;
+    text-align: center;
+    background-color: #ff1622; 
+}
+
+
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: black;
+    width: 100%;
+    box-sizing: border-box; /* Aggiunta per gestire il box model correttamente */
+}
+
+.left-buttons, .right-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+button {
+    background: none;
+    border: none;
+    color: black;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+.home-content {
+    padding-top: 20px;
+}
+
+.icon-large {
+    font-size: 24px; /* Imposta la dimensione dell'icona */
+}
+
+.search-button {
+    margin-right: 20px; /* Aggiunge un margine alla destra del pulsante di ricerca */
+}
+
+.link-button {
+    color: black; /* Imposta il colore del testo del link a nero */
+}
