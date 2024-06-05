@@ -15,7 +15,11 @@ const UtenteInfo = ({ email, nomeLibro, dataPrestito, dataFinePrestito, onAvvisa
 
 
 
-
+    const handleClick = () => {
+        console.log("Email:", email);
+        console.log("Data Fine Prestito:", dataFinePrestito);
+        onAvvisa(); // Chiamata alla funzione onAvvisa
+    };
 
 
     return (
@@ -25,7 +29,7 @@ const UtenteInfo = ({ email, nomeLibro, dataPrestito, dataFinePrestito, onAvvisa
             <p>Data Prestito: {dataPrestito}</p>
             <p>Data Fine Prestito: {dataFinePrestito}</p>
             {finePrestitoDate < today && (
-                <button className="avvisa-button" onClick={onAvvisa}>Avvisa</button>
+                <button className="avvisa-button" onClick={handleClick}>Avvisa</button>
             )}
         </div>
     );

@@ -12,9 +12,30 @@ class InfoPopup extends Component {
        // };
     }
 
-    handleAvvisa = (email) => {
+    handleAvvisa = (email,scadenza,titolo) => {
         console.log(`Avviso inviato a: ${email}`);
-        // Implementa la logica per inviare l'avviso
+        console.log(`Scadenza prima della chiamata: ${scadenza}`);
+        // Costruisci il corpo della richiesta come oggetto JSON
+    const requestBody = JSON.stringify({ titolo, email, scadenza });
+
+    // Invia la richiesta POST con il corpo JSON
+    fetch('http://localhost:8082/messaggio', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: requestBody
+    })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Messaggio creato');
+                } else {
+                    console.error('Errore nella creazione della notifica');
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta:', error);
+            });
     };
 
     render() {
@@ -36,7 +57,7 @@ class InfoPopup extends Component {
                                     nomeLibro={prestito.titolo}
                                     dataPrestito={prestito.data_prestito}
                                     dataFinePrestito={prestito.data_restituzione}
-                                    onAvvisa={() => this.handleAvvisa(prestito.email)}
+                                    onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
                                 />
                             ))}
                         </div>

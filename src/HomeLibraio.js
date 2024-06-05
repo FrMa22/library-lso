@@ -23,7 +23,7 @@ class HomeLibraio extends Component {
     componentDidMount() {
         this.getLimiteLibri();
         // Esegui una richiesta al backend per ottenere i dati dei libri
-        fetch('http://localhost:8090/libri')
+        fetch('http://localhost:8082/libri')
             .then(response => response.json())
             .then(data => {
                 // Aggiorna lo stato con i dati ottenuti dal backend
@@ -40,7 +40,7 @@ class HomeLibraio extends Component {
 
     getLimiteLibri = () => {
         const { limiteAttuale } = this.state;
-        fetch('http://localhost:8090/limite_libri', {
+        fetch('http://localhost:8082/limite_libri', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -98,7 +98,7 @@ class HomeLibraio extends Component {
 
     updateLimiteLibri = (limite) => {
         console.log('Valore limite inviato al server:', limite);
-        fetch(`http://localhost:8090/limite_libri?limite=${limite}`, {
+        fetch(`http://localhost:8082/limite_libri?limite=${limite}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
