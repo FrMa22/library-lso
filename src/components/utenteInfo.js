@@ -15,7 +15,11 @@ const UtenteInfo = ({ email, nomeLibro, dataPrestito, dataFinePrestito, onAvvisa
 
 
 
-
+    const handleClick = () => {
+        console.log("Email:", email);
+        console.log("Data Fine Prestito:", dataFinePrestito);
+        onAvvisa(); // Chiamata alla funzione onAvvisa
+    };
 
 
     return (

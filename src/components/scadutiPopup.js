@@ -46,6 +46,12 @@ class ScadutiPopup extends Component {
             });
     };
 
+
+   
+
+
+
+
     loadPrestiti = () => {
         // Imposta lo stato di caricamento
         this.setState({ loadingPrestiti: true });
