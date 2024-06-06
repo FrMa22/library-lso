@@ -8,7 +8,7 @@ class SearchPopup extends Component {
             searchKeyword: '',
             selectedCategory: '', // Single category selection
             categories: [
-                "Fantasy", "Distopia", "Romanzo", "Categoria 4",
+                "Fantasy", "Distopia", "Romanzo", "Categoriaaaaaaaaaaa",
                 "Categoria 5", "Categoria 6", "Categoria 7", "Categoria 8",
                 "Categoria 9", "Categoria 10", "Categoria 11", "Categoria 12",
                 "Categoria 13", "Categoria 14", "Categoria 15", "Categoria 16"
@@ -22,8 +22,23 @@ class SearchPopup extends Component {
 
     handleCategoryChange = (event) => {
         const categoryName = event.target.value;
-        this.setState({ selectedCategory: categoryName }); // Update selected category
+        const { selectedCategory } = this.state;
+    
+        // Se il radio button cliccato è già selezionato, deseleziona la categoria
+        if (selectedCategory === categoryName) {
+            this.setState({ selectedCategory: '' });
+        } else {
+            // Altrimenti, seleziona il radio button cliccato
+            this.setState({ selectedCategory: categoryName });
+        }
     };
+    
+    handleCategoryClick = (event) => {
+        // Assicurati che handleCategoryChange venga chiamato anche se il radio button è già selezionato
+        this.handleCategoryChange(event);
+    };
+    
+    
 
     handleSearch = () => {
         const { searchKeyword, selectedCategory } = this.state;
@@ -51,9 +66,9 @@ class SearchPopup extends Component {
 
         return (
             isOpen && (
-                <div className="search-popup-overlay" onClick={onClose}>
-                    <div className="search-popup-container" onClick={this.handleOverlayClick}>
-                        <div className="search-popup">
+                <div className="searching-popup-overlay" onClick={onClose}>
+                    <div className="searching-popup-container" onClick={this.handleOverlayClick}>
+                        <div className="searching-popup">
                             <input
                                 type="text"
                                 placeholder="Inserisci parola chiave..."
@@ -65,11 +80,13 @@ class SearchPopup extends Component {
                                 {categories.map(category => (
                                     <div key={category} className="category-item">
                                         <label>
+                                        
                                             <input
                                                 type="radio"
                                                 value={category}
                                                 checked={selectedCategory === category}
                                                 onChange={this.handleCategoryChange}
+                                                onClick={this.handleCategoryClick} // Aggiungiamo l'evento onClick
                                             />
                                             {category}
                                         </label>
@@ -77,8 +94,8 @@ class SearchPopup extends Component {
                                 ))}
                             </div>
                             <div className="button-container">
-                                <button className="close-button" onClick={onClose}>Chiudi</button>
-                                <button className="close-button" onClick={this.handleSearch}>Cerca</button>
+                                <button className="closing-button" onClick={onClose}>Chiudi</button>
+                                <button className="searching-button" onClick={this.handleSearch}>Cerca</button>
                             </div>
                         </div>
                     </div>

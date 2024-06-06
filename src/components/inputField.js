@@ -52,7 +52,6 @@ class InputField extends Component {
         })
         .then(data => {
             if (data) {
-                // Verifica se il body contiene libri e stampa ciascuno separatamente 
                 if (data.message) {
                     window.alert(data.message);
                 }

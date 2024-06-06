@@ -20,13 +20,28 @@ const UtenteInfo = ({ email, nomeLibro, dataPrestito, dataFinePrestito, onAvvisa
 
     return (
         <div className="utente-info">
-            <p>Email: {email}</p>
-            <p>Nome Libro: {nomeLibro}</p>
-            <p>Data Prestito: {dataPrestito}</p>
-            <p>Data Fine Prestito: {dataFinePrestito}</p>
-            {finePrestitoDate < today && (
+            <div style={{ textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem'}}>
+                <h5 className="card-email" style={{ fontSize: '1em' }}>Email:</h5>
+                <h5 className="card-email" >{email}</h5>
+            </div>
+            <div style={{ textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem'}}>
+                <h5 className="card-titolo" style={{ fontSize: '1em' }}>Titolo:</h5>
+                <h5 className="card-titolo" >{nomeLibro}</h5>
+            </div>
+            <div style={{ textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem'}}>
+                <h5 className="card-titolo" style={{ fontSize: '1em' }}>Data Prestito:</h5>
+                <h5 className="card-titolo" >{dataPrestito}</h5>
+            </div>
+            <div style={{ textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem'}}>
+                <h5 className="card-titolo" style={{ fontSize: '1em' }}>Data Fine Prestito:</h5>
+                <h5 className="card-titolo" >{dataFinePrestito}</h5>
+            </div>
+            <div style={{ textAlign: 'center', paddingLeft: '2rem', paddingRight: '2rem'}}>
+               {finePrestitoDate < today && (
                 <button className="avvisa-button" onClick={onAvvisa}>Avvisa</button>
-            )}
+            )} 
+            </div>
+            
         </div>
     );
 }

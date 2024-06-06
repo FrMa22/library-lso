@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Card from './card'; // Assicurati che il nome del componente sia corretto
 
 class HomeUtenteBase extends Component {
@@ -36,46 +38,54 @@ class HomeUtenteBase extends Component {
         });
     }
 
-    handleAddToCart = (bookTitle,presente_nel_carrello, copie_totali) => {
+    handleAddToCart = (bookTitle, presente_nel_carrello, copie_totali) => {
         const { userEmail } = this.state;
-        if (presente_nel_carrello == 'f' && copie_totali>0) {
-        fetch('http://localhost:8080/addToCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: userEmail,
-                bookTitle: bookTitle
+        if (presente_nel_carrello === 'f' && copie_totali>0) {
+            fetch('http://localhost:8080/addToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: userEmail,
+                    bookTitle: bookTitle
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log('Libro aggiunto al carrello con successo');
-                // Aggiorna lo stato del libro aggiunto
-                const updatedBooks = this.state.books.map(book => {
-                    if (book.titolo === bookTitle) {
-                        return { ...book, presente_nel_carrello: 't'};
-                    }
-                    return book;
-                });
-                this.setState({ books: updatedBooks });
-            } else {
-                console.error('Errore durante l\'aggiunta al carrello:', data.message);
-                // Gestione degli errori se l'aggiunta al carrello fallisce
-            }
-        })
-        .catch(error => {
-            console.error('Errore nella richiesta di aggiunta al carrello:', error);
-            // Gestione degli errori di rete o altre eccezioni
-        });
-    }else if(presente_nel_carrello=='t'){
-        console.log("valore di presente nel carrello: ",presente_nel_carrello);
-        window.alert("Questo libro è già nel carrello!");
-    }else if(copie_totali == 0){
-        window.alert("Questo libro non ha copie disponibili!");
-    }
+            .then(response => {
+                if(response.status === 202){
+                    window.alert('Accidenti, non ci sono più copie disponibili per questo libro.');
+                } else {
+                    return response.json(); 
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    console.log('Libro aggiunto al carrello con successo');
+                    toast.success('Libro inserito nel carrello'); // Show popup after successful addition
+                    // Update the state of the added book
+                    const updatedBooks = this.state.books.map(book => {
+                        if (book.titolo === bookTitle) {
+                            return { ...book, presente_nel_carrello: 't' };
+                        }
+                        return book;
+                    });
+                    this.setState({ books: updatedBooks });
+                } else {
+                    console.error('Errore durante l\'aggiunta al carrello:', data.message);
+                    // Handle errors if adding to cart fails
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta di aggiunta al carrello:', error);
+                // Handle network errors or other exceptions
+            });
+        } else if (presente_nel_carrello === 't') {
+            console.log("valore di presente nel carrello:", presente_nel_carrello);
+            window.alert("Questo libro è già nel carrello!");
+        } else if (copie_totali == 0) {
+            console.log("no copie");
+            window.alert("Questo libro non ha copie disponibili!");
+        }
     };
     
 
@@ -119,7 +129,12 @@ class HomeUtenteBase extends Component {
                                         onAddToCart={(bookTitle, presente_nel_carrello) => this.handleAddToCart(bookTitle, book.presente_nel_carrello, book.copie_totali)}
                                     />
                                 ))}
+                                <div className="carrello-container">
+                                    <ToastContainer position="top-center" autoClose={5000} />
+                                    {/* Resto del tuo codice di rendering */}
+                                </div>
                             </div>
+                            
                         )}
                     </div>
                 )}

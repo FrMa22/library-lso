@@ -34,7 +34,7 @@ class CardLibraio extends Component {
         const { nome_libro } = this.props;
         // Effettua la chiamata al backend per ottenere i dati dei prestiti per il libro corrente
         console.log("recupero dati dal server");
-        fetch(`http://localhost:8090/info?titolo=${encodeURIComponent(nome_libro)}`)
+        fetch(`http://localhost:8080/info?titolo=${encodeURIComponent(nome_libro)}`)
             .then(response => response.json())
             .then(data => {
                 console.log("dati recuperati");

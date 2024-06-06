@@ -1,4 +1,4 @@
-.search-popup-overlay {
+.searching-popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,13 +8,15 @@
     z-index: 999; /* Mettilo sotto il popup */
 }
 
-.search-popup-container {
+.searching-popup-container {
     position: fixed;
+    border-radius: 20px;
+    padding: 5px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    height: 320px;
+    width: 450px;
+    height: 470px;
     border: 1px solid #000;
     display: flex;
     flex-direction: column;
@@ -23,11 +25,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra per il popup */
 }
 
-.search-popup {
+.searching-popup {
     display: flex;
     flex-direction: column;
     flex: 1;
+    width: 100%; /* Larghezza al 100% del contenitore esterno */
+    height: 100%; /* Altezza al 100% del contenitore esterno */
 }
+
 
 .search-input {
     margin: 5px;
@@ -38,19 +43,24 @@
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
-    height: 40%;
+    height: 100%;
     overflow-y: auto; /* Abilita lo scorrimento verticale */
 }
 
+/* Nel file searchPopup.css */
 .category-item {
     margin: 5px;
+    display: flex;
+    align-items: center; /* Allinea verticalmente il testo */
 }
 
-.button-container {
+.category-item label {
     display: flex;
-    justify-content: space-between;
-    margin: 5px;
+    align-items: center; /* Allinea verticalmente il testo */
 }
+
+
+
 
 .category-list::-webkit-scrollbar {
     width: 8px; /* Larghezza della barra laterale */
@@ -65,8 +75,38 @@
     border-radius: 5px; /* Bordo arrotondato */
 }
 
-.close-button {
-    background-color: #c19de882; /* Definisci il colore e lo spessore del bordo */
+/* Nel file searchPopup.css */
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Distribuisci gli elementi lungo l'asse principale (orizzontalmente) */
+    margin: 5px;
+}
+
+.closing-button {
+    background-color: #fd1818;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color:#ffffff;
+    transition: background-color 0.3s ease;
+    margin-right: auto;
+    order: 1; /* Imposta l'ordine per posizionare il bottone "Chiudi" a sinistra */
+}
+
+.searching-button {
+    background-color: blue;
+    color:#ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+    order: 2; /* Imposta l'ordine per posizionare il bottone "Cerca" a destra */
+}
+.search-button {
+    background-color: #d01515; /* Definisci il colore e lo spessore del bordo */
     border: none; /* Rimuovi il bordo */
     border-radius: 30px;
     padding: 0.5rem 1rem; /* Aggiungi padding per una migliore usabilità */
@@ -74,6 +114,6 @@
     transition: background-color 0.3s ease; /* Aggiungi transizione per l'effetto hover */
 }
 
-.close-button:hover {
-    background-color: #b8860b; /* Cambia il colore di sfondo al passaggio del mouse */
-}
+    /* .close-button:hover {
+        *background-color: #b80b0b; 
+    } */

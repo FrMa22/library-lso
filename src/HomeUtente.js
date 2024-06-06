@@ -1,4 +1,3 @@
-// HomeUtente.js
 import React, { Component } from 'react';
 import HomeUtenteBase from './components/homeUtenteBase';
 import Carrello from './components/carrello';
@@ -6,6 +5,8 @@ import NavBar from './components/navBar';
 import SearchPopup from './components/searchPopup';
 import SchermataRicerca from './components/schermataRicerca';
 import LibriInPrestito from './components/libriInPrestito';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class HomeUtente extends Component {
     constructor(props) {
@@ -14,9 +15,94 @@ class HomeUtente extends Component {
             currentScreen: 1, // 1: HomeUtenteBase, 2: Carrello, 3: SchermataRicerca
             isSearchPopupOpen: false,
             searchParams: { keyword: '', category: [] },
-            searchKey: 0 // Aggiungi una chiave per forzare il remounting
+            searchKey: 0, // Aggiungi una chiave per forzare il remounting
+            notification: null, // Stato per memorizzare la notifica
+            userEmail: localStorage.getItem('userEmail'),
         };
+        this.pollingInterval = null; // Intervallo per il polling
     }
+
+    componentDidMount() {
+        // Avvia il polling al caricamento del componente
+        this.startPolling();
+    }
+
+    componentWillUnmount() {
+        // Interrompi il polling quando il componente viene smontato
+        this.stopPolling();
+    }
+
+    startPolling = () => {
+        // Imposta l'intervallo di polling per controllare le notifiche ogni 5 secondi
+        this.pollingInterval = setInterval(this.checkNotification, 5000);
+    };
+
+    stopPolling = () => {
+        // Interrompi l'intervallo di polling
+        clearInterval(this.pollingInterval);
+    };
+
+    checkNotification = () => {
+        const { userEmail } = this.state;
+        // Effettua una richiesta al backend per controllare se ci sono nuove notifiche
+        fetch('http://localhost:8080/check_notifiche', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: userEmail
+            })
+        }) // Modifica il percorso secondo la tua implementazione nel backend
+            .then(response => {
+                console.log("entrato in reponse");
+                if (response.status === 200) {
+                    console.log('Recuperata una notifica');
+                    return response.json(); // Continua a parsare il corpo JSON
+                } 
+            })
+            .then(data => {
+                if (data.message.includes('Notifica inviata con successo')) {
+                    console.log("entrato in data");
+                    // Aggiorna lo stato del componente con la notifica ricevuta
+                    this.setState({ notification: data.notification });
+                    window.alert(data.notification);
+                    // Rimuovi la notifica solo dopo la conferma
+                    this.handleNotificationConfirmation();
+                }
+            })
+            .catch(error => {
+                console.error('Errore durante il polling delle notifiche:', error);
+            });
+    };
+    
+    handleNotificationConfirmation = () => {
+        const { notification } = this.state;
+        console.log('cliccato ok ');
+        if (notification) {
+            // Effettua una richiesta al backend per rimuovere la notifica dal database
+            fetch('http://localhost:8080/rimuovi_notifica', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    notification: notification
+                })
+            }) // Modifica il percorso secondo la tua implementazione nel backend
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('Notifica rimossa con successo dal database');
+                        // Resetta lo stato della notifica nel componente
+                        this.setState({ notification: null });
+                    }
+                })
+                .catch(error => {
+                    console.error('Errore durante la rimozione della notifica:', error);
+                });
+        }
+    };
+    
 
     // Funzione per cambiare la schermata
     changeScreen = (screenNumber) => {
@@ -49,7 +135,7 @@ class HomeUtente extends Component {
     };
 
     render() {
-        const { currentScreen, isSearchPopupOpen, searchParams, searchKey } = this.state;
+        const { currentScreen, isSearchPopupOpen, searchParams, searchKey, notification } = this.state;
 
         let componentToDisplay;
         // Determina il componente da visualizzare in base alla schermata corrente
@@ -92,6 +178,11 @@ class HomeUtente extends Component {
                         onSearch={this.handleSearch}
                     />
                 )}
+
+                <div className="carrello-container">
+                    <ToastContainer position="top-center" autoClose={2000} />
+                    {/* Resto del tuo codice di rendering */}
+                </div>
             </>
         );
     }

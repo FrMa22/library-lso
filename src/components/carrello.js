@@ -53,7 +53,7 @@ class Carrello extends Component {
             this.setState({ loading: false });
         });
     };
-    
+
     getLimiteLibri = () => {
         const {userEmail, limite_libri } = this.state;
         fetch('http://localhost:8080/get_limite_libri_per_utente', {
@@ -92,19 +92,19 @@ class Carrello extends Component {
     handleConfirm = () => {
         console.log('Conferma cliccata');
         const { userEmail, books, limite_libri } = this.state;
-    
+
         const activeBooks = books.filter(book => book.rimosso_temporaneamente !== 't');
-    
+
         if (activeBooks.length === 0) {
             window.alert('Non ci sono libri da prendere in prestito');
             return; // Esci dalla funzione se non ci sono libri nel carrello
         }
-    
+
         if (activeBooks.length > limite_libri) {
             toast.error(`Il numero di libri nel carrello (${activeBooks.length}) supera il limite consentito (${limite_libri}).`);
             return; // Esci dalla funzione se il numero di libri supera il limite
         }
-    
+
         fetch('http://localhost:8080/creaPrestiti', {
             method: 'POST',
             headers: {
@@ -115,7 +115,7 @@ class Carrello extends Component {
             })
         })
         .then(response => {
-            if (response.status === 202) {
+            if (response.status === 409) {
                 console.log('Trovati libri con 0 copie disponibili oppure libri gia in prestito');
                 return response.json(); // Continua a parsare il corpo JSON
             } else {
@@ -173,8 +173,8 @@ class Carrello extends Component {
             this.setState({ loading: false });
         });
     };
-    
-                
+
+
     handleRestoreToCart = (bookTitle) => {
         console.log('Rimetti temporaneamente nel carrello:', bookTitle);
         const { userEmail,showRemovePermanentlyButton } = this.state;
@@ -274,10 +274,10 @@ class Carrello extends Component {
             this.setState({ loading: false });
         });
     };
-    
+
     render() {
         const { books, loading, limite_libri, showRemovePermanentlyButton } = this.state;
-    
+
         return (
             <div className="carrello-container">
                 <main className="carrello-content">
@@ -341,7 +341,7 @@ class Carrello extends Component {
             </div>
         );
     }
-    
+
 }
 
 export default Carrello;

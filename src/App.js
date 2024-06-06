@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './components/loginForm';
 import Registrazione from './Registrazione';
 import HomeUtente from './HomeUtente';
+import HomeLibraio from './HomeLibraio';
 import './App.css';
 
 class App extends Component {
@@ -35,6 +36,8 @@ class App extends Component {
           console.log("Login libraio avvenuto con successo");
           localStorage.setItem('userEmail', email); // Salva l'email nel Local Storage
           this.setState({ loggedIn: true, role: 'libraio' });
+          window.location.href = '/homeLibraio';
+
         } else {
           console.log("Credenziali non valide");
         }
@@ -45,6 +48,10 @@ class App extends Component {
       console.error('Errore nella richiesta al backend:', error.message);
     }
   };
+
+
+ 
+
 
   render() {
     return (
@@ -61,6 +68,7 @@ class App extends Component {
           />
           <Route path="/registrazione" element={<Registrazione />} />
           <Route path="/homeUtente" element={<HomeUtente />} />
+          <Route path="/homeLibraio" element={<HomeLibraio />} />
         </Routes>
       </Router>
     );

@@ -12,9 +12,31 @@ class InfoPopup extends Component {
        // };
     }
 
-    handleAvvisa = (email) => {
-        console.log(`Avviso inviato a: ${email}`);
+    handleAvvisa = (email,scadenza,titolo) => {
+        console.log(`Avviso inviato a: ${email} e Scadenza prima della chiamata: ${scadenza}`);
         // Implementa la logica per inviare l'avviso
+        console.log(`Scadenza prima della chiamata: ${scadenza}`);
+        // Costruisci il corpo della richiesta come oggetto JSON
+    const requestBody = JSON.stringify({ titolo, email, scadenza });
+
+    // Invia la richiesta POST con il corpo JSON
+    fetch('http://localhost:8080/messaggio', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: requestBody
+    })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Messaggio creato');
+                } else {
+                    console.error('Errore nella creazione della notifica');
+                }
+            })
+            .catch(error => {
+                console.error('Errore nella richiesta:', error);
+            });
     };
 
     render() {
@@ -25,9 +47,11 @@ class InfoPopup extends Component {
 
         return (
             show && (
-                <div className="search-popup-container">
-                    <div className="search-popup">
-                        <h2>Utenti che hanno preso in prestito {nome_libro} </h2>
+                <div className="info-popup-overlay">
+                    <div className="info-popup">
+                        <div style={{ textAlign: 'center',marginBottom:'5%'}}>
+                            <h2>Utenti che hanno preso in prestito {nome_libro} </h2>
+                        </div>
                         <div className="prestiti-list">
                             {prestiti.map((prestito) => (
                                 <UtenteInfo
@@ -36,7 +60,7 @@ class InfoPopup extends Component {
                                     nomeLibro={prestito.titolo}
                                     dataPrestito={prestito.data_prestito}
                                     dataFinePrestito={prestito.data_restituzione}
-                                    onAvvisa={() => this.handleAvvisa(prestito.email)}
+                                    onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
                                 />
                             ))}
                         </div>

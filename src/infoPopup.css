@@ -1,5 +1,6 @@
-.search-popup-container {
+.info-popup-overlay {
     position: fixed;
+    background-color: rgba(0, 0, 0, 0.242); 
     top: 50%;
     left: 50%;
     width: 100%;
@@ -7,18 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
     transform: translate(-50%, -50%);
-    z-index: 1000; /* Add a high z-index value */
+    z-index: 999; /* Add a high z-index value */
 }
 
 .info-popup {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
-    max-height: 80%;
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 1%;
     overflow-y: auto;
+    z-index: 1000; /* Add a high z-index value */
 }
 
 .info-popup h2 {
@@ -44,11 +43,10 @@
 }
 
 .avvisa-button {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
     color: white;
     border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
