@@ -28,7 +28,10 @@ class LimitePopup extends Component {
                 <div className="limite-popup">
                     <div className="limite-popup-content">
                         <span className="close" onClick={onClose}>&times;</span>
-                        <h2>Inserisci il limite</h2>
+                        <div style={{fontSize:'35px', justifyContent:'center', display:'flex', marginBottom:'20px'}}> 
+                            <strong>Inserisci il limite</strong>
+                        </div>
+                        
                         <input
                             type="number"
                             value={limite}
@@ -36,8 +39,8 @@ class LimitePopup extends Component {
                             placeholder="Inserisci il limite"
                         />
                         <div className="buttons">
-                            <button onClick={this.handleConferma}>Conferma</button>
-                            <button onClick={onClose}>Annulla</button>
+                            <button className='annulla_button' onClick={onClose}>Annulla</button>
+                            <button className='conferma_button' onClick={this.handleConferma}>Conferma</button>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import '../scadutiPopup.css';
 import UtenteScaduto from './utenteScaduto';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ScadutiPopup extends Component {
     constructor(props) {
@@ -36,11 +38,16 @@ class ScadutiPopup extends Component {
     })
             .then(response => {
                 if (response.ok) {
+                    toast.success('Avviso inviato con successo.');
                     console.log('Messaggio creato');
-                } else {
-                    console.error('Errore nella creazione della notifica');
+                } else if(response.status === 500) {
+                    toast.error('Errore nell\'invio dell\'avviso');
+
                 }
             })
+            
+            
+
             .catch(error => {
                 console.error('Errore nella richiesta:', error);
             });
@@ -86,30 +93,39 @@ class ScadutiPopup extends Component {
     
         return (
             isOpen && (
-                <div className="search-popup-container">
-                    <div className="search-popup">
-                        <h2>Utenti con prestiti scaduti</h2>
-                        {loadingPrestiti ? (
-                            <p>Caricamento...</p>
-                        ) : prestiti.length > 0 ? (
-                            <div className="prestiti-scaduti-list">
-                                {prestiti.map((prestito) => (
-                                    <UtenteScaduto
-                                        key={prestito.email}
-                                        email={prestito.email}
-                                        nomeLibro={prestito.titolo}
-                                        dataPrestito={prestito.data_prestito}
-                                        dataFinePrestito={prestito.data_restituzione}
-                                        onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
-                                    />
-                                ))}
-                            </div>
-                        ) : (
-                            <p>Non ci sono prestiti scaduti</p>
-                        )}
-                        <div className="button-container">
-                            <button className="close-button" onClick={onClose}>Chiudi</button>
+                <div className="scaduti-popup-container">
+                    <div className="scaduti-popup" >
+                        <div style={{fontSize: '35px', justifyContent:'center', display:'flex'}}>
+                            <strong> Utenti con prestiti scaduti</strong>
                         </div>
+                        
+                        <div style={{fontSize: '25px',justifyContent:'center', display:'flex', marginTop:'15px'}}>
+                            {loadingPrestiti ? (
+                                <p>Caricamento...</p>
+                            ) : prestiti.length > 0 ? (
+                                <div className="prestiti-scaduti-list">
+                                    {prestiti.map((prestito) => (
+                                        <UtenteScaduto
+                                            key={prestito.email}
+                                            email={prestito.email}
+                                            nomeLibro={prestito.titolo}
+                                            dataPrestito={prestito.data_prestito}
+                                            dataFinePrestito={prestito.data_restituzione}
+                                            onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
+                                        />
+                                    ))}
+                                </div>
+                            ) : (
+                                <p>Non ci sono prestiti scaduti</p>
+                            )}
+                        </div>
+                        <div className="button-container">
+                            <button className="close-button-scaduti" onClick={onClose}>Chiudi</button>
+                        </div>
+                    </div>
+                    <div className="carrello-container">
+                        <ToastContainer position="top-center" autoClose={1000} />
+                        {/* Resto del tuo codice di rendering */}
                     </div>
                 </div>
             )

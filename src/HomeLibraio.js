@@ -14,7 +14,6 @@ class HomeLibraio extends Component {
             libri: [],
             loading: true,
             isScadutiPopupOpen: false,
-            isKebabMenuOpen: false,
             isLimitePopupOpen: false,
             limiteAttuale: -1, // Aggiungi lo stato per memorizzare il limite attuale
         };
@@ -73,15 +72,7 @@ class HomeLibraio extends Component {
         }));
     };
 
-    toggleKebabMenu = () => {
-        this.setState(prevState => ({
-            isKebabMenuOpen: !prevState.isKebabMenuOpen
-        }));
-    };
 
-    closeKebabMenu = () => {
-        this.setState({ isKebabMenuOpen: false });
-    };
 
     toggleLimitePopup = () => {
         this.setState(prevState => ({
@@ -117,43 +108,35 @@ class HomeLibraio extends Component {
         });
     };
     
-
-
-    handleSearch = (keyword, category) => {
-        console.log('Ricerca:', keyword, category);
+    handleLogout = () => {
+        localStorage.removeItem('userEmail');
+        // Logica per il logout, ad esempio, reindirizzamento alla pagina di login
+        window.location.href = '/'; // Modifica questo percorso secondo le tue necessità
     };
 
     render() {
-        const { libri, loading, isScadutiPopupOpen, isKebabMenuOpen, isLimitePopupOpen, limiteAttuale } = this.state;
+        const { libri, loading, isScadutiPopupOpen, isLimitePopupOpen, limiteAttuale } = this.state;
 
         return (
             <>
-                <header className="home-header">
-                    <div className="left-buttons">
-                        {/* Aggiungi qui eventuali altri bottoni nella parte sinistra */}
+                <header className="home-header" >
+                    <div className="left-buttons-libraio" style={{flex:'1'}} >
+                       Limite prestiti per utente: {limiteAttuale}
+
                     </div>
-                    <div className="title">
-                        Libri disponibili HOME LIBRAIO
-                        <span className="limite-prestiti">Limite attuale dei prestiti: {limiteAttuale}</span>
+                    <div className="title" style={{fontSize:'40px'}} >
+                        <strong >Home Libraio </strong>
+                        
                     </div>
-                    <div className="right-buttons">
-                        <div className="menu-wrapper">
-                            <button className="menu-button" onClick={this.toggleKebabMenu}>
-                                <i className="fas fa-ellipsis-v icon-large"></i>
-                            </button>
-                            {isKebabMenuOpen && (
-                                <div className="kebab-menu">
-                                    <button onClick={this.toggleScadutiPopup}>Prestiti scaduti</button>
-                                    <button onClick={this.toggleLimitePopup}>Limite copia prestiti</button>
-                                    <Link to="/" className="link-button">Esci</Link>
-                                </div>
-                            )}
-                        </div>
+                    <div className="right-buttons-libraio"  style={{ flex: '1', display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
+                        <button  className = "PrestitiScadutiButton" onClick={this.toggleScadutiPopup}>Prestiti scaduti</button>
+                        <button className = "PrestitiScadutiButton" onClick={this.toggleLimitePopup}>Modifica limite prestiti</button>
+                        <button onClick={this.handleLogout} className="fas fa-sign-out-alt icon-large" style={{color:'black'}} ></button>
                     </div>
                 </header>
                 <main className="home-content">
                     {loading ? (
-                        <p>Caricamento...</p>
+                        <p style={{display:'flex', justifyContent:'center', fontSize:'35px', marginTop: '100px'}}>Caricamento...</p>
                     ) : (
                         <div className='row' style={{ alignItems: 'center', flexDirection: 'row', justifyContent: 'left', marginLeft: '5rem' }}>
                             {libri.map(libro => (

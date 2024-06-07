@@ -41,6 +41,7 @@ input {
 
 .buttons {
     display: flex;
+    margin-top: 10px;
     justify-content: space-between;
 }
 
@@ -51,12 +52,12 @@ input {
     cursor: pointer;
 }
 
-.buttons button:nth-child(1) {
-    background-color: #007bff;
+.annulla_button {
+    background-color: #dc3545;
     color: #fff;
 }
 
-.buttons button:nth-child(2) {
-    background-color: #dc3545;
+.conferma_button {
+    background-color: #007bff;
     color: #fff;
 }

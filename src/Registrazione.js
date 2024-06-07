@@ -5,7 +5,7 @@ class Registrazione extends Component {
     render() {
         return (
             <>
-                <div className='container'>
+                <div className='container' style={{backgroundColor: '#fff', marginTop:'20px'}}>
                     <h1>Registrazione</h1>
                     <hr />
                     <div className='row'>

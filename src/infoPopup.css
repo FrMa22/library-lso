@@ -64,5 +64,10 @@
     cursor: pointer;
     margin-left: 10px;
 }
+.no_prestiti_per_libro {
+    justify-content: center;
+    display: flex;
+    font-size: 25px;
+}
 
 

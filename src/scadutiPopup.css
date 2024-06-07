@@ -1,7 +1,7 @@
-.search-popup-container {
+.scaduti-popup-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -10,11 +10,11 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.search-popup {
+.scaduti-popup {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
+    width: 70%;
     max-height: 80%;
     overflow-y: auto;
 }
@@ -55,14 +55,15 @@
     justify-content: flex-end;
 }
 
-.close-button {
-    background-color: #007bff;
+.close-button-scaduti {
+    background-color: #000000;
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius:20px;
     cursor: pointer;
     margin-left: 10px;
+    font-size: 25px;
 }
 
 

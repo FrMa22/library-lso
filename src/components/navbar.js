@@ -43,8 +43,8 @@ class NavBar extends Component {
                         <i className="fas fa-search icon-large"></i>
                     </button>
                 </div>
-                <div className="title">
-                    {title}
+                <div className="title" style={{fontSize:'40px'}}>
+                    <strong> {title} </strong>
                 </div>
                 <div className="right-buttons" style={{ flex: '1', display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
                     <button

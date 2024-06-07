@@ -12,11 +12,24 @@ const UtenteScaduto = ({ email, nomeLibro, dataPrestito, dataFinePrestito, onAvv
     
     return (
         <div className="utente-scaduto">
-            <p>Email: {email}</p>
-            <p>Nome Libro: {nomeLibro}</p>
-            <p>Data Prestito: {dataPrestito}</p>
-            <p>Data Fine Prestito: {dataFinePrestito}</p>
-            {dataFinePrestito && <button className="avvisa-button" onClick={handleClick}>Avvisa</button>}
+            <div style={{marginLeft: '30px',marginRight:'40px', textAlign: 'center',fontSize:'20px'}}> 
+                <p style={{justifyContent:'center',display:'flex'}}> <strong> Email</strong></p>
+                <p>{email}</p>
+            </div>
+            <div style={{marginRight:'40px', textAlign: 'center',fontSize:'20px'}}> 
+                <p style={{justifyContent:'center',display:'flex'}}> <strong> Titolo</strong></p>
+                <p>{nomeLibro}</p>
+            </div>
+            <div style={{marginRight:'40px', textAlign: 'center',fontSize:'20px'}}> 
+                <p style={{justifyContent:'center',display:'flex'}}> <strong> Data Prestito</strong></p>
+                <p>{dataPrestito}</p>
+            </div>
+            <div style={{marginRight:'40px', textAlign: 'center',fontSize:'20px'}}> 
+                <p style={{justifyContent:'center',display:'flex'}}> <strong> Data Fine Prestito</strong></p>
+                <p>{dataFinePrestito}</p>
+            </div>
+            
+            {dataFinePrestito && <button className="avvisa-button" style={{marginRight:'30px'}} onClick={handleClick}>Avvisa</button>}
         </div>
     );
 }

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import '../infoPopup.css';
 import UtenteInfo from './utenteInfo';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class InfoPopup extends Component {
     constructor(props) {
         super(props);
-        //this.state = {
-          //  prestiti: [
-       //
-         //   ]
-       // };
+        this.state = {
+            prestiti: []
+        };
     }
 
     handleAvvisa = (email,scadenza,titolo) => {
@@ -29,8 +29,10 @@ class InfoPopup extends Component {
     })
             .then(response => {
                 if (response.ok) {
-                    console.log('Messaggio creato');
+                    toast.success('Avviso inviato con successo.');
+                    console.log('Messaggio creatOo');
                 } else {
+                    toast.error('Errore nell\'invio dell\'avviso');
                     console.error('Errore nella creazione della notifica');
                 }
             })
@@ -52,23 +54,34 @@ class InfoPopup extends Component {
                         <div style={{ textAlign: 'center',marginBottom:'5%'}}>
                             <h2>Utenti che hanno preso in prestito {nome_libro} </h2>
                         </div>
-                        <div className="prestiti-list">
-                            {prestiti.map((prestito) => (
-                                <UtenteInfo
-                                    key={prestito.email}
-                                    email={prestito.email}
-                                    nomeLibro={prestito.titolo}
-                                    dataPrestito={prestito.data_prestito}
-                                    dataFinePrestito={prestito.data_restituzione}
-                                    onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
-                                />
-                            ))}
+                        <div >
+                        {prestiti.length > 0 ? 
+                            (<div className="prestiti-list">
+                                {prestiti.map((prestito) => (
+                                    <UtenteInfo
+                                        key={prestito.email}
+                                        email={prestito.email}
+                                        nomeLibro={prestito.titolo}
+                                        dataPrestito={prestito.data_prestito}
+                                        dataFinePrestito={prestito.data_restituzione}
+                                        onAvvisa={() => this.handleAvvisa(prestito.email,prestito.data_restituzione,prestito.titolo)}
+                                    />
+                                ))}
+                            </div>) :
+                            ( <div className='no_prestiti_per_libro'>
+                                Non ci sono prestiti per questo libro
+                            </div>)}
                         </div>
                         <div className="button-container">
                             <button className="close-button" onClick={onClose}>Chiudi</button>
                         </div>
                     </div>
+                    <div className="carrello-container">
+                        <ToastContainer position="top-center" autoClose={1000} />
+                        {/* Resto del tuo codice di rendering */}
+                    </div>
                 </div>
+                
             )
         );
     }
