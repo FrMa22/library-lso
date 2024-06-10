@@ -41,7 +41,10 @@ class App extends Component {
         } else {
           console.log("Credenziali non valide");
         }
-      } else {
+      } else if(response.status === 401) {
+        window.alert("Credenziali non valide");
+      }else{
+    
         console.error('Errore nella richiesta al backend:', response.statusText);
       }
     } catch (error) {

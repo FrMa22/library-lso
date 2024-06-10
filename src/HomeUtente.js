@@ -66,9 +66,30 @@ class HomeUtente extends Component {
                     console.log("entrato in data");
                     // Aggiorna lo stato del componente con la notifica ricevuta
                     this.setState({ notification: data.notification });
+                    //this.handleNotificationConfirmation();
+
+                    fetch('http://localhost:8080/rimuovi_notifica', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: userEmail,
+                            notification: data.notification
+                        })
+                    }) // Modifica il percorso secondo la tua implementazione nel backend
+                        .then(response => {
+                            if (response.status === 200) {
+                                console.log('Notifica rimossa con successo dal database');
+                                // Resetta lo stato della notifica nel componente
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Errore durante la rimozione della notifica:', error);
+                        });
+
                     window.alert(data.notification);
-                    // Rimuovi la notifica solo dopo la conferma
-                    this.handleNotificationConfirmation();
+                    this.setState({ notification: null });
                 }
             })
             .catch(error => {
@@ -76,8 +97,8 @@ class HomeUtente extends Component {
             });
     };
     
-    handleNotificationConfirmation = () => {
-        const { notification } = this.state;
+   /*  handleNotificationConfirmation = () => {
+        const {userEmail, notification } = this.state;
         console.log('cliccato ok ');
         if (notification) {
             // Effettua una richiesta al backend per rimuovere la notifica dal database
@@ -87,6 +108,7 @@ class HomeUtente extends Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
+                    email: userEmail,
                     notification: notification
                 })
             }) // Modifica il percorso secondo la tua implementazione nel backend
@@ -102,7 +124,7 @@ class HomeUtente extends Component {
                 });
         }
     };
-    
+     */
 
     // Funzione per cambiare la schermata
     changeScreen = (screenNumber) => {
@@ -180,7 +202,7 @@ class HomeUtente extends Component {
                 )}
 
                 <div className="carrello-container">
-                    <ToastContainer position="top-center" autoClose={2000} />
+                    <ToastContainer position="top-center" autoClose={5000} />
                     {/* Resto del tuo codice di rendering */}
                 </div>
             </>

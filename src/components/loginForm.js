@@ -58,7 +58,7 @@ class LoginForm extends Component {
               />
             </div>
             <div className='form-group'>
-              <button type="submit">Accedi</button>
+              <button type="submit" style={{backgroundColor:'#6FC1FF', borderRadius:'20px', padding:'10px'}}>Accedi</button>
             </div>
           </form>
           <p className='register-link'>Non hai un account? <Link to="/registrazione">Registrati</Link></p>
