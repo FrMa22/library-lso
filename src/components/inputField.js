@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 class InputField extends Component {
     constructor(props) {
@@ -71,11 +70,13 @@ class InputField extends Component {
 
     render() {
         const { showPassword } = this.state;
+        const {handleSwap} = this.props;
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
+            <form onSubmit={this.handleSubmit} style={{width:'75%'}}>
+            <p style={{justifyContent:'center', display:'flex', fontSize:'35px'}}> <strong>Registrazione </strong> </p>
+                <div className="form-group" style={{marginTop:'20px'}}>
+                    <label htmlFor="email" >Email</label>
                     <input
                         type="email"
                         className="form-control"
@@ -86,7 +87,7 @@ class InputField extends Component {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" style={{marginTop:'20px'}}>
                     <label htmlFor="confermaEmail">Conferma Email</label>
                     <input
                         type="email"
@@ -98,7 +99,7 @@ class InputField extends Component {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" style={{marginTop:'20px'}}>
                     <label htmlFor="password">Password</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
@@ -110,7 +111,7 @@ class InputField extends Component {
                     />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" style={{marginTop:'20px'}}>
                     <label htmlFor="confermaPassword">Conferma Password</label>
                     <input
                         type={showPassword ? 'text' : 'password'}
@@ -122,7 +123,7 @@ class InputField extends Component {
                     />
                 </div>
 
-                <div className="form-group d-flex  align-items-center">
+                <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'flex-end' }}>
                     <div className="form-check">
                         <input
                             type="checkbox"
@@ -131,20 +132,19 @@ class InputField extends Component {
                             checked={showPassword}
                             onChange={this.togglePasswordVisibility}
                         />
-                        <label className="form-check-label" htmlFor="mostraPassword">
+                        <label className="form-check-label" htmlFor="mostraPassword" style={{marginLeft:'10px'}}>
                             Mostra Password
                         </label>
                     </div>
                 </div>
 
-                <div className="form-group d-flex justify-content-center">
-                    <button type="button" className="btn btn-secondary mr-2">
-                        <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-                            Annulla
-                        </Link>
+
+                <div className="form-group" style={{justifyContent:'space-between',paddingLeft:'20px', paddingRight:'20px',display:'flex',marginTop:'40px'}}>
+                    <button type="button" style={{ backgroundColor:'red', padding:'10px',paddingLeft:'50px',paddingRight:'50px',borderRadius:'10px' ,color: 'white',fontSize:'20px' }}  onClick={handleSwap} >
+                        Annulla
                     </button>
-                    <button type="button" className="btn btn-primary" onClick={this.handleConferma}>
-                        Conferma
+                    <button type="button" style={{ backgroundColor:'blue', padding:'10px' ,paddingLeft:'50px',paddingRight:'50px',borderRadius:'10px' ,color: 'white' ,fontSize:'20px'}} onClick={this.handleConferma}>
+                        Crea Account
                     </button>
                 </div>
             </form>
