@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HomeUtenteBase from './components/homeUtenteBase';
 import Carrello from './components/carrello';
-import NavBar from './components/navBar';
+import NavBar from './components/navbar';
 import SearchPopup from './components/searchPopup';
 import SchermataRicerca from './components/schermataRicerca';
 import LibriInPrestito from './components/libriInPrestito';
